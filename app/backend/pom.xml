@@ -8,10 +8,10 @@
 		<version>3.3.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>dev.hrishi</groupId>
-	<artifactId>backend</artifactId>
+	<groupId>com.tarento</groupId>
+	<artifactId>grievance-management-system</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>backend</name>
+	<name>grievance-management-system</name>
 	<description>Backend for Grievance Management System</description>
 	<url/>
 	<licenses>

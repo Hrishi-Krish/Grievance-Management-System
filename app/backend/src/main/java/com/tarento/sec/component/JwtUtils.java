@@ -16,7 +16,6 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtils {
 
-    @SuppressWarnings("deprecation")
     SecretKey secret = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     private final long expiration = 1000 * 60 * 60 * 24;
@@ -34,7 +33,6 @@ public class JwtUtils {
         return claimsResolver.apply(claims);
     }
 
-    @SuppressWarnings("deprecation")
     private Claims extractAllClaims(String token) {
         return Jwts.parser().setSigningKey(secret).build().parseClaimsJws(token).getBody();
     }
@@ -47,7 +45,6 @@ public class JwtUtils {
         return createToken(userDetails.getUsername());
     }
 
-    @SuppressWarnings("deprecation")
     private String createToken(String subject) {
         return Jwts.builder().setSubject(subject)
             .setIssuedAt(new Date(System.currentTimeMillis()))

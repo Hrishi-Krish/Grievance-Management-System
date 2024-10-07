@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tarento.sec.dto.UserDto;
 import com.tarento.sec.model.User;
+import com.tarento.sec.response.user.UserResponse;
 import com.tarento.sec.service.UserService;
 
 @RestController
@@ -29,29 +30,32 @@ public class UserController {
 
     @GetMapping("")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<User> getUsers() {
+    public List<UserResponse> getUsers() {
         return userService.getUsers();
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERVISOR')")
+    public UserResponse getUserById(@PathVariable Long id) {
+        return userService.getUserDetailsById(id);
     }
 
     @GetMapping("/username/{username}")
-    public List<User> getUserByUsername(@PathVariable String username) {
-        return userService.getUserByUsername(username);
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERVISOR')")
+    public List<UserResponse> getUserByUsername(@PathVariable String username) {
+        return userService.getUserDetailsByUsername(username);
     }
 
     @GetMapping("/email/{email}")
-    public User getUserByEmail(@PathVariable String email) {
-        return userService.getUserByEmail(email);
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERVISOR')")
+    public UserResponse getUserByEmail(@PathVariable String email) {
+        return userService.getUserDetailsByEmail(email);
     }
 
     @GetMapping("/role/{role}")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPERVISOR')")
-    public List<User> getUsersByRole(@PathVariable String role) {
-        return userService.getUsersByRole(role);
+    public List<UserResponse> getUsersByRole(@PathVariable String role) {
+        return userService.getUserDetailsByRole(role);
     }
 
     @DeleteMapping("/{id}")
@@ -60,19 +64,30 @@ public class UserController {
         return userService.deleteUser(id);
     }
 
-    @PutMapping("/{id}")
-    public User updateUser(@RequestBody User user) {
-        return userService.updateUser(user);
+    @PutMapping("/password/{id}")
+    public ResponseEntity<String> updateUserPassword(@RequestBody User user) {
+        return userService.updateUserPassword(user);
+    }
+
+    @PutMapping("/username/{id}")
+    public ResponseEntity<String> updateUsername(@RequestBody User user) {
+        return userService.updateUsername(user);
     }
 
     @PostMapping("/create")
-    public User createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<String> createUser(@RequestBody UserDto userDto) {
         return userService.createUser(userDto);
     }
 
-    @PostMapping("")
+    @PostMapping("/newEmployee")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPERVISOR')")
-    public User createEmployeeUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<String> createEmployeeUser(@RequestBody UserDto userDto) {
         return userService.createEmployeeUser(userDto);
+    }
+
+    @PostMapping("/roleChange")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERVISOR')")
+    public ResponseEntity<String> changeUserRole(@RequestBody UserDto userDto) {
+        return userService.changeUserRole(userDto);
     }
 }

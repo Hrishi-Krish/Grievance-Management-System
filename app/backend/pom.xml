@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tarento</groupId>
-	<artifactId>grievance-management-system</artifactId>
+	<artifactId>Grievance-Management-System</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>grievance-management-system</name>
-	<description>Backend for Grievance Management System</description>
+	<name>Grievance-Management-System</name>
+	<description>Grievance Management System</description>
 	<url/>
 	<licenses>
 		<license/>
